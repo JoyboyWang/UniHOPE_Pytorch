@@ -1,0 +1,76 @@
+{
+    "base": {
+        "exp_name": "unihope.ho3d",
+        "model_dir": "experiment/unihope.ho3d"
+    },
+    "data": {
+        "name": "HO3D_HOPE",
+        "transforms_type": "hflnet",
+        "eval_type": [
+            "val"
+        ],
+        "input_img_shape": [
+            256,
+            256
+        ],
+        "root_dir": "data/HO3D_v2",
+        "load_nori": false,
+        "contrastive": true,
+        "use_data_aug_h": true,
+        "use_data_aug_ho": true,
+        "use_data_aug_h_gen": true,
+        "pair_same_data_aug": true,
+        "filter_rule": "occ",
+        "occ_threshold": 0.8,
+        "gen_part": 2
+    },
+    "model": {
+        "name": "unihope_net",
+        "obj_conf_layer_legacy": false
+    },
+    "loss": {
+        "name": "hflnet_grasping_objconf",
+        "weight": {
+            "c3_h": 1,
+            "x_hand": 1,
+            "mano_encoding": 1
+        }
+    },
+    "metric": {
+        "major_metric": "score",
+        "obj_eval_mode": "gt"
+    },
+    "train": {
+        "num_epochs": 50,
+        "batch_size": 32,
+        "num_workers": 16,
+        "init_layer_weight": true
+    },
+    "test": {
+        "batch_size": 32,
+        "num_workers": 16
+    },
+    "summary": {
+        "save_summary_steps": 50,
+        "save_mid_freq": 10,
+        "save_latest_freq": 1,
+        "save_best_after": 0
+    },
+    "optimizer": {
+        "name": "adam",
+        "lr": 1.68e-05,
+        "weight_decay_l2": 5e-4
+    },
+    "scheduler": {
+        "name": "step",
+        "milestones": [
+            10,
+            20,
+            30,
+            40,
+            50,
+            60
+        ],
+        "gamma": 0.7
+    }
+}

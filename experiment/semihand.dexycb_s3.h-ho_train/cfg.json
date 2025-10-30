@@ -1,0 +1,66 @@
+{
+    "base": {
+        "exp_name": "semihand.dexycb_s3.h-ho_train",
+        "model_dir": "experiment/semihand.dexycb_s3.h-ho_train"
+    },
+    "data": {
+        "name": "DEX_YCB_HOPE",
+        "transforms_type": "semi_hand_object",
+        "eval_type": [
+            "test"
+        ],
+        "input_img_shape": [
+            512,
+            512
+        ],
+        "root_dir": "data/DexYCB",
+        "data_split": "s3",
+        "load_nori": false,
+        "bbox_hand_normalize_2d_joint": true
+    },
+    "model": {
+        "name": "semi_hand_object"
+    },
+    "loss": {
+        "name": "semi_hand_object",
+        "weight": {
+
+        }
+    },
+    "metric": {
+        "major_metric": "score",
+        "obj_eval_mode": "gt",
+        "rep_threshold": 20,
+        "add_threshold": 0.5
+    },
+    "train": {
+        "num_epochs": 50,
+        "batch_size": 24,
+        "num_workers": 16
+    },
+    "test": {
+        "batch_size": 48,
+        "num_workers": 16
+    },
+    "summary": {
+        "save_summary_steps": 50,
+        "save_mid_freq": 10,
+        "save_latest_freq": 1,
+        "save_best_after": 0
+    },
+    "optimizer": {
+        "name": "adam",
+        "lr": 1e-4
+    },
+    "scheduler": {
+        "name": "step",
+        "milestones": [
+            10,
+            20,
+            30,
+            40,
+            50
+        ],
+        "gamma": 0.7
+    }
+}

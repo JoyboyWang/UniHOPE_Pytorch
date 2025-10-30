@@ -1,0 +1,89 @@
+{
+    "base": {
+        "exp_name": "simplehand.dexycb_s0.h-ho_train",
+        "model_dir": "experiment/simplehand.dexycb_s0.h-ho_train"
+    },
+    "data": {
+        "name": "DEX_YCB_HOPE",
+        "transforms_type": "simple_hand",
+        "eval_type": [
+            "test"
+        ],
+        "input_img_shape": [
+            224,
+            224
+        ],
+        "root_dir": "data/DexYCB",
+        "data_split": "s0",
+        "load_nori": false,
+        "bbox_hand_normalize_2d_joint": false,
+        "minibatch_per_epoch": 3136
+    },
+    "model": {
+        "name": "simple_hand",
+        "BACKBONE": {
+            "model_name": "fastvit_ma36",
+            "pretrain": true,
+            "out_feature_channel": 1216,
+            "drop_path_rate": 0.2
+        },
+        "UV_HEAD": {
+            "in_features": 1216,
+            "out_features": 42
+        },
+        "DEPTH_HEAD": {
+            "in_features": 1216,
+            "out_features": 1
+        },
+        "MESH_HEAD": {
+            "in_channels": 1216,
+            "depths": [1, 1, 1],
+            "token_nums": [21, 84, 336],
+            "dims": [256, 128, 64],
+            "dropout": 0.1,
+            "first_prenorms": [true, true, true],
+            "block_types": ["attention", "attention", "attention"]
+        },
+        "LOSSES": {
+            "UV_LOSS_WEIGHT": 1.0,
+            "JOINTS_LOSS_WEIGHT": 10.0,
+            "DEPTH_LOSS_WEIGHT": 1.0,
+            "VERTICES_LOSS_WEIGHT": 10.0
+        }
+    },
+    "loss": {
+        "name": "simple_hand"
+    },
+    "metric": {
+        "major_metric": "score"
+    },
+    "train": {
+        "num_epochs": 100,
+        "batch_size": 128,
+        "num_workers": 16
+    },
+    "test": {
+        "batch_size": 128,
+        "num_workers": 16
+    },
+    "summary": {
+        "save_summary_steps": 50,
+        "save_mid_freq": 10,
+        "save_latest_freq": 1,
+        "save_best_after": 0
+    },
+    "optimizer": {
+        "name": "adamw",
+        "lr": 5e-4,
+        "weight_decay_l2": 1e-2,
+        "base_lr": 5e-4,
+        "warmup_epoch": 5
+    },
+    "scheduler": {
+        "name": "step",
+        "milestones": [
+           200
+        ],
+        "gamma": 1.0
+    }
+}

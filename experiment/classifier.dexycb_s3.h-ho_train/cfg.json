@@ -1,0 +1,57 @@
+{
+    "base": {
+        "exp_name": "classifier.dexycb_s3.h-ho_train",
+        "model_dir": "experiment/classifier.dexycb_s3.h-ho_train"
+    },
+    "data": {
+        "name": "DEX_YCB_HOPE",
+        "transforms_type": "classifier",
+        "eval_type": [
+            "test"
+        ],
+        "input_img_shape": [
+            128,
+            128
+        ],
+        "root_dir": "data/DexYCB",
+        "data_split": "s3",
+        "load_nori": false
+    },
+    "model": {
+        "name": "classifier",
+        "pretrain": true
+    },
+    "loss": {
+        "name": "grasp_vit_classifier"
+    },
+    "metric": {
+        "major_metric": "score"
+    },
+    "train": {
+        "num_epochs": 38,
+        "batch_size": 64,
+        "num_workers": 20
+    },
+    "test": {
+        "batch_size": 64,
+        "num_workers": 20
+    },
+    "summary": {
+        "save_summary_steps": 50,
+        "save_mid_freq": 10,
+        "save_latest_freq": 1,
+        "save_best_after": 0
+    },
+    "optimizer": {
+        "name": "adam",
+        "lr": 5e-5
+    },
+    "scheduler": {
+        "name": "step",
+        "milestones": [
+            25,
+            30
+        ],
+        "gamma": 0.1
+    }
+}

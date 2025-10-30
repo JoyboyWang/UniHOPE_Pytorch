@@ -1,0 +1,31 @@
+# Ignore Python bytecode files
+__pycache__/
+*.pyc
+
+# Ignore build-related files
+build/
+egg-info/
+venv/
+*.so
+*.pth
+
+# Ignore IDE and editor directories
+*.idea/
+
+# Ignore images and other files
+*.jpg
+*.png
+*.zip
+*.pkl
+pred*.json
+hand_result*.json
+obj_result*.json
+*.npy
+*.mp4
+
+# Ignore specific files under experiments
+**/summary
+
+# Ignore data
+data/
+data
