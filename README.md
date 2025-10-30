@@ -1,37 +1,45 @@
-# [CVPR 2025] UniHOPE: A Unified Approach for Hand-Only and Hand-Object Pose Estimation.
+# [CVPR 2025] UniHOPE: A Unified Approach for Hand-Only and Hand-Object Pose Estimation
+This is the official implementation of our paper [UniHOPE (CVPR 2025)](https://openaccess.thecvf.com/content/CVPR2025/papers/Wang_UniHOPE_A_Unified_Approach_for_Hand-Only_and_Hand-Object_Pose_Estimation_CVPR_2025_paper.pdf).
 
-## Todo List:
-- [x] Inference code and checkpoints for UniHOPE and previous methods
+## Our poster
+![poster](./materials/cvpr-poster.png)
+
+## Todo List
+- [X] ~~Inference code and checkpoints for UniHOPE and previous methods~~
 - [ ] Code for generative de-occluder (without which training is infeasible, but inference is OK)
 
-NOTE: Our original code uses a special format on Object Storage Service (OSS) to store all the training and testing data. Due to the server migration, we need some time to clean the code such that it can support loading from local disk. Stay tuned!
+NOTE: Our original code uses a special format on Object Storage Service (OSS) to store all the training and testing data. Due to the server migration, we need more time to clean the code such that it can support loading from local disk. Stay tuned!
 
-## Usage:
+## Usage
 
-### 0. Environment
+#### 0. Environment
 * System: Ubuntu 20.04.6 LTS
 * CUDA version: 11.8
 * Python version: 3.9.18
 * PyTorch version: 2.0.0
 
-### 1. Data preparation
+#### 1. Data Preparation
 First, please ensure the [DexYCB dataset](https://dex-ycb.github.io/) and [HO3D_v2 dataset](https://1drv.ms/f/c/11742dd40d1cbdc1/ElPb2rhOCeRMg-dFSM3iwO8B5nS1SgnQJs9F6l28G0pKKg?e=TMuxgr) are downloaded into `./data`.
 Besides the standard datasets, we have generated several annotation files, including labels of grasping status and hand occlusion for DexYCB/HO3D. You can download these files from [https://drive.google.com/drive/folders/1ZuafaCkx34atbtz_wAHkc8dikWU0Q5Qz?usp=drive_link](https://drive.google.com/drive/folders/1ZuafaCkx34atbtz_wAHkc8dikWU0Q5Qz?usp=drive_link), and put them under `./data/DexYCB` and `./data/HO3D_v2` seperately.
 
 You may also use scripts under `./data_creation` to generate some files by your own. For example, 
-To creating all the splits we used (i.e., s0, s1, and s3) for DexYCB, simply run: 
+to creating all the splits we used (i.e., s0, s1, and s3) for DexYCB, simply run: 
 
-```python data_creation/create_dataset_dexycb.py --root_dir data/DexYCB```
+```
+python data_creation/create_dataset_dexycb.py --root_dir data/DexYCB
+```
 
 To prepare grasping labels for DexYCB s0 split testset, run:
 
-```python data_creation/prepare_grasp_dexycb.py --root_dir data/DexYCB --data_split s0_test```
+```
+python data_creation/prepare_grasp_dexycb.py --root_dir data/DexYCB --data_split s0_test
+```
 
 
 Please note that for HO3D, we choose to annotate the grasping status manually rather than using an automatic pipeline to ensure accuracy.
 
 
-### 2. Evaluation:
+#### 2. Evaluation
 We provide three scripts that can be used for evaluation.
 
 * `eval.py`: A thorough evaluation with full hand metrics, including MPJPE, MPVPE, F-score, AUC, etc.
@@ -43,17 +51,21 @@ We provide three scripts that can be used for evaluation.
 
 Here is an example of evaluating UniHOPE on DexYCB s0 split.
 
-```accelerate launch --config_file yaml/{$N}_gpu.yaml eval.py --model_dir experiment/unihope.dexycb_s0 --resume experiment/unihope.dexycb_s0/test_model_best.pth```
+```
+accelerate launch --config_file yaml/{$N}_gpu.yaml eval.py --model_dir experiment/unihope.dexycb_s0 --resume experiment/unihope.dexycb_s0/test_model_best.pth
+```
 
 where `N` is the number of GPUs you want to use.
 
 Another example is to evaluate classifier-combined HPE and HOPE (i.e., A+B in the main paper) on DexYCB s3 split.
 
-```accelerate launch --config_file yaml/{$N}_gpu.yaml eval.py --model_dir experiment/classifier_h2onet_hflnet.dexycb_s3/ --resume_h experiment/h2onet.dexycb_s3.h_train/test_model_best.pth  --resume_ho experiment/hflnet.dexycb_s3.ho_train/test_model_best.pth --resume_cls experiment/classifier.dexycb_s3.h-ho_train/test_model_best.pth```
+```
+accelerate launch --config_file yaml/{$N}_gpu.yaml eval.py --model_dir experiment/classifier_h2onet_hflnet.dexycb_s3/ --resume_h experiment/h2onet.dexycb_s3.h_train/test_model_best.pth  --resume_ho experiment/hflnet.dexycb_s3.ho_train/test_model_best.pth --resume_cls experiment/classifier.dexycb_s3.h-ho_train/test_model_best.pth
+```
 
 You can find all the available checkpoints in the below link: [https://drive.google.com/drive/folders/1SI61ynvsC6Z3DtBk-KwR-ODacA2plzqh?usp=sharing](https://drive.google.com/drive/folders/1SI61ynvsC6Z3DtBk-KwR-ODacA2plzqh?usp=sharing), and put them under corresponding folder of `./experiment`.
 
-## Citation:
+## Citation
 ```
 @InProceedings{Wang_2025_CVPR,
     author    = {Wang, Yinqiao and Xu, Hao and Heng, Pheng-Ann and Fu, Chi-Wing},
@@ -65,7 +77,8 @@ You can find all the available checkpoints in the below link: [https://drive.goo
 }
 ```
 
-## Acknolwegement:
+## Acknolwegement
+We incorporated codes from the official implementations of the following works:
 * [MobRecon](https://github.com/SeanChenxy/HandMesh)
 * [HancOccNet](https://github.com/namepllet/HandOccNet) 
 * [H2ONet](https://github.com/hxwork/H2ONet_Pytorch)

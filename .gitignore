@@ -14,7 +14,6 @@ venv/
 
 # Ignore images and other files
 *.jpg
-*.png
 *.zip
 *.pkl
 pred*.json
