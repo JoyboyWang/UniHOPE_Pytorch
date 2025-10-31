@@ -20,16 +20,16 @@ NOTE: Our original code uses a special format on Object Storage Service (OSS) to
 
 #### 1. Data Preparation
 First, please ensure the [DexYCB dataset](https://dex-ycb.github.io/) and [HO3D_v2 dataset](https://1drv.ms/f/c/11742dd40d1cbdc1/ElPb2rhOCeRMg-dFSM3iwO8B5nS1SgnQJs9F6l28G0pKKg?e=TMuxgr) are downloaded into `./data`.
-Besides the standard datasets, we have generated several annotation files, including labels of grasping status and hand occlusion for DexYCB/HO3D. You can download these files from [https://drive.google.com/drive/folders/1ZuafaCkx34atbtz_wAHkc8dikWU0Q5Qz?usp=drive_link](https://drive.google.com/drive/folders/1ZuafaCkx34atbtz_wAHkc8dikWU0Q5Qz?usp=drive_link), and put them under `./data/DexYCB` and `./data/HO3D_v2` seperately.
+Besides the original datasets, our code uses several additional annotation files, including labels of grasping status and hand occlusion for DexYCB/HO3D, and different splits for DexYCB. You can download these files from [https://drive.google.com/drive/folders/1ZuafaCkx34atbtz_wAHkc8dikWU0Q5Qz?usp=drive_link](https://drive.google.com/drive/folders/1ZuafaCkx34atbtz_wAHkc8dikWU0Q5Qz?usp=drive_link), and put them under `./data/DexYCB` and `./data/HO3D_v2` seperately.
 
-You may also use scripts under `./data_creation` to generate some files by your own. For example, 
+You may also use scripts under `./data_creation` to generate part of these files by your own. For example, 
 to creating all the splits we used (i.e., s0, s1, and s3) for DexYCB, simply run: 
 
 ```
 python data_creation/create_dataset_dexycb.py --root_dir data/DexYCB
 ```
 
-To prepare grasping labels for DexYCB s0 split testset, run:
+To prepare grasping labels for DexYCB s0-split testset, run:
 
 ```
 python data_creation/prepare_grasp_dexycb.py --root_dir data/DexYCB --data_split s0_test
