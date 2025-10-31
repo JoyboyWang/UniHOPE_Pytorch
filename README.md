@@ -63,7 +63,7 @@ Another example is to evaluate classifier-combined HPE and HOPE (i.e., A+B in th
 accelerate launch --config_file yaml/{$N}_gpu.yaml eval.py --model_dir experiment/classifier_h2onet_hflnet.dexycb_s3/ --resume_h experiment/h2onet.dexycb_s3.h_train/test_model_best.pth  --resume_ho experiment/hflnet.dexycb_s3.ho_train/test_model_best.pth --resume_cls experiment/classifier.dexycb_s3.h-ho_train/test_model_best.pth
 ```
 
-You can find all the available checkpoints in Hugging Face: [https://huggingface.co/yqwang255/UniHOPE-CVPR2025-checkpoints](https://huggingface.co/yqwang255/UniHOPE-CVPR2025-checkpoints), and put them under the corresponding model folder of `./experiment`.
+You can find all the available checkpoints in Hugging Face: [https://huggingface.co/yqwang255/UniHOPE-CVPR2025-checkpoints/tree/main](https://huggingface.co/yqwang255/UniHOPE-CVPR2025-checkpoints/tree/main), and put them under the corresponding model folder of `./experiment`.
 
 ## Citation
 ```
